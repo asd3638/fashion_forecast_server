@@ -11,6 +11,22 @@ module.exports = class Look extends Sequelize.Model{
                 type: Sequelize.ENUM("TOP", "BOTTOM", "OUTER", "OP"),
                 allowNull: true,
             },
+            style: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
+            len: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
+            top_len: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            },
+            bottom_len: {
+                type: Sequelize.STRING(100),
+                allowNull: true,
+            }
         }, {
             sequelize,
             timestamps: true,

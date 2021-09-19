@@ -6,20 +6,21 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/join', async (req, res, next) => {
-  const { email, password, nick } = req.body;
+  const { email, password, nickName } = req.body;
   try {
     const exUserEmail = await User.findOne({ where: { email } });
-    const exUserNick = await User.findOne({ where: { nick } });
+    const exUserNick = await User.findOne({ where: { nickName } });
     if (exUserEmail) {
-      return res.send("aee");
+      return res.send("dup_email");
     }
     if (exUserNick) {
-      return res.send("aen");
+      return res.send("dup_nickname");
     }
+    // 중복되는 이메일이나 닉네임의 유저가 없으면
     const hash = await bcrypt.hash(password, 12);
     await User.create({
       email,
-      nick,
+      nickName,
       password: hash,
     });
     return res.send("success");
@@ -50,14 +51,6 @@ router.post('/login', (req, res, next) => {
 
 router.get('/logout', (req, res) => {
   return res.send(200, "logout")
-});
-
-router.get('/kakao', passport.authenticate('kakao'));
-
-router.get('/kakao/callback', passport.authenticate('kakao', {
-  failureRedirect: '/',
-}), (req, res) => {
-  res.redirect('/');
 });
 
 module.exports = router;

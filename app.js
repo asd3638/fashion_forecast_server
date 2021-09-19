@@ -8,7 +8,13 @@ const passport = require('passport');
 const cors = require('cors');
 
 dotenv.config();
+//라우터랑 연결
 const uploadRouter = require('./routes/upload');
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/user');
+const lookRouter = require('./routes/look');
+
+
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -42,6 +48,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/upload', uploadRouter);
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/look', lookRouter);
+
+
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

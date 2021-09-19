@@ -15,15 +15,6 @@ module.exports = class User extends Sequelize.Model {
       password: {
         type: Sequelize.STRING(100),
         allowNull: true,
-      },
-      provider: {
-        type: Sequelize.STRING(10),
-        allowNull: false,
-        defaultValue: 'local',
-      },
-      snsId: {
-        type: Sequelize.STRING(30),
-        allowNull: true,
       }
     }, {
       sequelize,
@@ -38,6 +29,5 @@ module.exports = class User extends Sequelize.Model {
   }
   static associate(db){
     db.User.hasMany(db.Look, {foreignKey: 'userId', sourceKey: 'id'});
-    db.User.hasMany(db.Temp, {foreignKey: 'userId', sourceKey: 'id'});
   }
 };

@@ -1,9 +1,9 @@
 const express = require('express');
 const User = require('../models/user');
-const Study = require('../models/study');
 
 const router = express.Router();
 
+// 로그인한 유저 정보 받아오기
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
@@ -18,23 +18,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.get('/:id/studies', async (req, res, next) => {
-  try {
-    const studies = await Study.findAll({
-      include: {
-        model: User,
-        where: { id: req.params.id },
-      },
-    });
-    console.log(studies);
-    res.json(studies);
-  }catch (err) {
-    console.log(err);
-    next(err);
-  }
-})
-
-
+// 로그인한 유저 정보 수정
 router.route('/:id')
   .patch(async (req, res, next) => {
     try {
@@ -53,7 +37,7 @@ router.route('/:id')
     }
   })
 
-  //삭제
+  //유저 삭제
   .delete(async (req, res, next) => {
     try {
       const result = await User.destroy({ where: { id: req.params.id } });
